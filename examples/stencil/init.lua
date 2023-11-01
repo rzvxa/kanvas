@@ -9,14 +9,14 @@ return function()
   local windowWidth, windowHeight = love.window.getDesktopDimensions()
   windowWidth, windowHeight = windowWidth*.5, windowHeight*.5
 
-  push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {
+  kanvas:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {
     fullscreen = false,
     resizable = true,
     pixelperfect = true
   })
-  push:setBorderColor{0, 0, 0} --default value
+  kanvas:setBorderColor{0, 0, 0} --default value
 
-  push:setupCanvas({
+  kanvas:setupCanvas({
     { name = 'main_canvas' },
     { name = 'stencil_canvas', stencil = true}
   })
@@ -39,14 +39,14 @@ return function()
   end
 
   function love.draw()
-    push:apply("start")
+    kanvas:apply("start")
     
     -- apply stencil
-    push:setCanvas("stencil_canvas")
+    kanvas:setCanvas("stencil_canvas")
     love.graphics.stencil(function()
       love.graphics.setColor(1, 1, 1)
       local time = love.timer.getTime() * 3
-      love.graphics.circle("fill", push:getWidth()*.5 + math.cos(time) * 20, push:getHeight()*.5 + math.sin(time) * 20, 10 + math.sin(time) * 2)
+      love.graphics.circle("fill", kanvas:getWidth()*.5 + math.cos(time) * 20, kanvas:getHeight()*.5 + math.sin(time) * 20, 10 + math.sin(time) * 2)
     end, 'replace', 1)
 
     -- draw background with stencil
@@ -56,11 +56,11 @@ return function()
 
     -- switch to main canvas unaffected by stencil, but drawn behind stencil_canvas
     -- (this is why the circle draws on top of the mouse)
-    push:setCanvas("main_canvas")
+    kanvas:setCanvas("main_canvas")
 
     love.graphics.setColor(1, 1, 1)
     local mouseX, mouseY = love.mouse.getPosition()
-    mouseX, mouseY = push:toGame(mouseX, mouseY)
+    mouseX, mouseY = kanvas:toGame(mouseX, mouseY)
     --if nil is returned, that means the mouse is outside the game screen
     if mouseX and mouseY then --cursor
       love.graphics.points(
@@ -72,7 +72,7 @@ return function()
       )
     end
     
-    push:apply("end")
+    kanvas:apply("end")
   end
   
 end

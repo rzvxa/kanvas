@@ -9,7 +9,7 @@ return function ()
   local windowWidth, windowHeight = love.window.getDesktopDimensions()
   windowWidth, windowHeight = windowWidth*.5, windowHeight*.5
 
-  push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {
+  kanvas:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {
     fullscreen = false,
     resizable = true,
     highdpi = true,
@@ -22,7 +22,7 @@ return function ()
     image = love.graphics.newImage( "examples/single-shader/love.png" )
     
     shader = love.graphics.newShader("examples/single-shader/shader.fs")
-    push:setShader( shader )
+    kanvas:setShader( shader )
   end
   
   function love.update(dt)
@@ -31,12 +31,12 @@ return function ()
   end
 
   function love.draw()
-    push:apply("start")
+    kanvas:apply("start")
     
     love.graphics.setColor(255, 255, 255)
     love.graphics.draw(image, (gameWidth-image:getWidth())*.5, (gameHeight-image:getHeight())*.5)
     
-    push:apply("end")
+    kanvas:apply("end")
   end
   
 end

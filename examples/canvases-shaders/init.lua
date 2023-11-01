@@ -9,7 +9,7 @@ return function ()
   local windowWidth, windowHeight = love.window.getDesktopDimensions()
   windowWidth, windowHeight = windowWidth*.5, windowHeight*.5
 
-  push:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {
+  kanvas:setupScreen(gameWidth, gameHeight, windowWidth, windowHeight, {
     fullscreen = false,
     resizable = true,
     highdpi = true,
@@ -25,11 +25,11 @@ return function ()
     shader1 = love.graphics.newShader("examples/canvases-shaders/shader1.fs")
     shader2 = love.graphics.newShader("examples/canvases-shaders/shader2.fs")
     
-    push:setupCanvas({
+    kanvas:setupCanvas({
       { name = "shader", shader = shader1 }, --applied only to one canvas
       { name = "noshader" }
     })
-    push:setShader( shader2 ) --applied to final render
+    kanvas:setShader( shader2 ) --applied to final render
   end
   
   function love.update(dt)
@@ -40,17 +40,17 @@ return function ()
   end
 
   function love.draw()
-    push:apply("start")
+    kanvas:apply("start")
     
     love.graphics.setColor(255, 255, 255)
     
-    push:setCanvas("shader")
+    kanvas:setCanvas("shader")
     love.graphics.draw(image1, (gameWidth-image1:getWidth())*.5, (gameHeight-image1:getHeight())*.5 - 100) --global shader + canvas shader will be applied
     
-    push:setCanvas("noshader")
+    kanvas:setCanvas("noshader")
     love.graphics.draw(image2, (gameWidth-image2:getWidth())*.5, (gameHeight-image2:getHeight())*.5 + 100) --only global shader will be applied
     
-    push:apply("end")
+    kanvas:apply("end")
   end
   
 end

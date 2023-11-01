@@ -1,4 +1,4 @@
-push = require "push" --require the library
+kanvas = require "kanvas" --require the library
 love.window.setTitle("Press space to switch examples!")
 
 local examples = {
@@ -20,7 +20,7 @@ for i = 1, #examples do
 end
 
 function love.resize(w, h)
-	push.resize(w, h)
+	kanvas.resize(w, h)
 end
 
 function love.keypressed(key)
@@ -31,7 +31,7 @@ function love.keypressed(key)
 		love.load()
 	elseif key == "f" then -- Activate fullscreen mode
 		love.window.setMode(0, 0, {fullscreen = true, fullscreentype = "desktop"})
-		push.resize(love.graphics.getDimensions())
+		kanvas.resize(love.graphics.getDimensions())
 	elseif key == "escape" then
 		love.event.quit()
 	end
